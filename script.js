@@ -1,74 +1,87 @@
-// To display posts
 function displayPost() {
-    let post = localStorage.getItem('post')
+    const container = document.getElementById('posts');
+    if (!container) return;
 
-    if (post) {
-        post = localStorage.getItem('post')
-    } 
+    container.innerHTML = '';
 
-    else {
-        post = [];
+    let posts = localStorage.getItem('posts');
+    if (posts) {
+        posts = JSON.parse(posts);
+    } else {
+        posts = [];
     }
+
+    posts.forEach(function(post, index) {
+        const postsDiv = document.createElement('div');
+        const title = document.createElement('h2');
+        title.textContent = post.title;
+        const content = document.createElement('p');
+        content.textContent = post.content;
+
+        postsDiv.appendChild(title);
+        postsDiv.appendChild(content);
+
+        if (post.image) {
+            const img = document.createElement('img');
+            img.src = post.image;
+            img.width = 200;
+            postsDiv.appendChild(img);
+        }
+
+         const deleteBtn = document.createElement('button');
+            deleteBtn.textContent = 'Delete Post';
+            deleteBtn.addEventListener('click', function() {
+            posts.splice(index, 1); // remove this post
+            localStorage.setItem('posts', JSON.stringify(posts));
+            displayPost(); // refresh the list
+        });
+
+        postsDiv.appendChild(deleteBtn);
+
+        container.appendChild(postsDiv);
+    });
 }
 
-const container = document.getElementById('post')
-
-container.innerHTML = '';
-
-posts.forEach(function(post) {
-    const postsDiv = document.createElement('div')
-    const title = document.createElement('h2')
-    title.textContent = post.title;
-    const content = document.createElement('p')
-    content.textContent = post.content;
-    const img = document.createAElement("img");
-    img.src = post.image;
-    img.width = 200;
-
-    postsDiv.appendChild(title);
-    postsDiv.appendChild(content);
-    postsDiv.appendChild(img)
-
-    document.getElementById('container').appendChild(postsDiv);
-}
-);
+document.addEventListener('DOMContentLoaded', displayPost);
 
 // To save post to Local Storage
 
 document.addEventListener("DOMContentLoaded", function() {
 
-const form = document.getElementById("postForm");
-
-form.addEventListener("submit", function(event) {
-
-event.preventDefault();
-
-const title = document.getElementById("title").value;
-const content = document.getElementById("content").value;
-const image = document.getElementById("image").value;
+    const form = document.getElementById("postForm");
+    if (!form) return;
 
 
-let posts = localStorage.getItem("posts");
+    form.addEventListener("submit", function(event) {
 
-if (posts) {
-    posts = JSON.parse(posts);
-    } else {
-    posts = [];
-}
+        event.preventDefault();
 
-const newPost = {
-    id: Date.now(),
-    title: title,
-    content: content,
-    image: image
-};
+        const title = document.getElementById("title").value;
+        const content = document.getElementById("content").value;
+        const image = document.getElementById("image").value;
 
-posts.push(newPost);
 
-localStorage.setItem("posts", JSON.stringify(posts));
+    let posts = localStorage.getItem("posts");
 
-window.location.href = "index.html";
+    if (posts) {
+        posts = JSON.parse(posts);
+        } else {
+        posts = [];
+    }
 
-});
+    const newPost = {
+        id: Date.now(),
+        title: title,
+        content: content,
+        image: image
+    };
+
+    posts.push(newPost);
+
+    localStorage.setItem("posts", JSON.stringify(posts));
+
+    window.location.href = "index.html";
+
+    });
 
 });
