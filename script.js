@@ -42,7 +42,17 @@ function displayPost() {
             displayPost();
         });
 
+        const editBtn = document.createElement('button');
+            editBtn.textContent = 'Edit';
+            editBtn.classList.add('edit-Btn');
+            editBtn.addEventListener('click', function() {
+            localStorage.setItem('editPostId', post.id);
+            window.location.href = 'new-post.html';
+    });
+
         postsDiv.appendChild(deleteBtn);
+
+        postsDiv.appendChild(editBtn);
 
         container.appendChild(postsDiv);
     });
@@ -82,12 +92,42 @@ document.addEventListener("DOMContentLoaded", function() {
         image: image
     };
 
-    posts.push(newPost);
+    if (editPostId) {
+        posts = posts.map(post => {
+            if (post.id == editPostId) {
+                return {
+                    ...post,
+                    title,
+                    content,
+                    image
+                };
+            }
+            return post;
+        });
 
+        localStorage.removeItem('editPostId');
+
+    } else {
+        posts.push(newPost);
+    }
     localStorage.setItem("posts", JSON.stringify(posts));
 
     window.location.href = "index.html";
 
     });
+
+    const editPostId = localStorage.getItem('editPostId');
+
+    if (editPostId) {
+        let posts = JSON.parse(localStorage.getItem('posts')) || [];
+
+        const postToEdit = posts.find(p => p.id == editPostId);
+
+        if (postToEdit) {
+            document.getElementById('title').value = postToEdit.title;
+            document.getElementById('content').value = postToEdit.content;
+            document.getElementById('image').value = postToEdit.image;
+        }
+    }
 
 });
