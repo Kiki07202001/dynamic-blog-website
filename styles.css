@@ -95,3 +95,28 @@ body {
     border-radius: 10px;
     cursor: pointer;
 }
+
+.edit-Btn {
+    display: block;
+    margin: 20px auto;
+    font-size: 20px;
+    padding: 8px 30px;
+    color:rgb(0, 0, 0);
+    background-color: wheat;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#postForm {
+    border: 1px solid wheat;
+    text-align: center;
+    color: white;
+    background-color: rgb(147, 179, 146);
+}
+
+.post-form {
+    border: 1px solid wheat;
+    text-align: center;
+    color: white;
+    background-color: rgb(147, 179, 146);
+}
