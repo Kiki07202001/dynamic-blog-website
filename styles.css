@@ -57,3 +57,41 @@ body {
 .nav-list a:hover {
     color: rgb(147, 179, 146);
 }
+
+#posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+.post {
+    border: 1px solid wheat;
+    text-align: center;
+    color: white;
+    background-color: rgb(147, 179, 146);
+}
+
+.post-title {
+    font-size: 4rem;
+    color: white;
+}
+
+.post-content {
+    font-size: 16px;
+}
+
+.post-image {
+    border-radius: 8px;
+    width: 80%;
+}
+
+.delete-Btn {
+    display: block;
+    margin: 20px auto;
+    font-size: 20px;
+    padding: 8px 30px;
+    color:rgb(0, 0, 0);
+    background-color: wheat;
+    border-radius: 10px;
+    cursor: pointer;
+}
